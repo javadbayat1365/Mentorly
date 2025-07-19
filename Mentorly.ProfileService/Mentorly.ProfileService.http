@@ -1,0 +1,6 @@
+@Mentorly.ProfileService_HostAddress = http://localhost:5010
+
+GET {{Mentorly.ProfileService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
