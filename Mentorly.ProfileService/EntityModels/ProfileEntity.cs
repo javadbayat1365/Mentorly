@@ -15,12 +15,12 @@ namespace Mentorly.ProfileService.EntityModels
         public string UserId { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public string Bio { get; set; }
+        public string Bio { get; set; } 
         public string TimeZone { get; set; }
 
         public List<Skill> Skills { get; set; } = [];
         public List<Exprience> Expriences { get; set; } = [];
-        public int MyProperty { get; set; }
+        public List<SocialLink> SocialLinks { get; set; } = [];
     }
 
     public class Skill
