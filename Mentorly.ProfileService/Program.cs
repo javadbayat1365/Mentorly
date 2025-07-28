@@ -2,7 +2,7 @@ using Carter;
 using Mentorly.ProfileService.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Scalar.AspNetCore;
-
+//test for master branch
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
