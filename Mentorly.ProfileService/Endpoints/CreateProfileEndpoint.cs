@@ -12,12 +12,13 @@ namespace Mentorly.ProfileService.Endpoints
             app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db) => {
                 var collection = db.GetCollection<ProfileEntity>(ProfileEntity.CollectionName);
                 var existUserProfile = Builders<ProfileEntity>.Filter.Eq(x => x.UserId,apiModel.UserId);
-                if (collection.Find(existUserProfile).AnyAsync() != null) 
-                {
-                    return Results.Problem("profile already exists");
-                }
-                return null;
-            });
+                if (await collection.Find(existUserProfile).AnyAsync()) 
+                    return Results.Problem("profile already exists",statusCode:StatusCodes.Status409Conflict);
+
+                var entity = apiModel.ToEntity(apiModel.UserId);
+                await collection.InsertOneAsync(entity);
+                return Results.Created($"/profiles/{entity.Id}",entity);
+            }).WithMetadata().WithName("CreateProfile").WithOpenApi();
         }
 
         public class CreateProfileApiModel
