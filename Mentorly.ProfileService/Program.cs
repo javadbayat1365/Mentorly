@@ -2,9 +2,7 @@
 using Mentorly.ProfileService.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Scalar.AspNetCore;
-//for develope branch
-//for develope branch
-//test for master branch
+//test revert = master
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
