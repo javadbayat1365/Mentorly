@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.ConfigureMongoDb().ConfigureMongoDbEntities();
-//builder.Services.AddCarter();
+builder.Services.AddCarter();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
@@ -18,13 +18,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
    //app.MapOpenApi();
-
-    //app.MapScalarApiReference();
+   app.MapScalarApiReference();
 }
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapControllers();
-//app.MapCarter();
+app.MapCarter();
+app.MapScalarApiReference();
 await app.UseMongoDbEntitiesAsync();
 app.Run();

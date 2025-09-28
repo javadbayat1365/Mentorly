@@ -18,7 +18,7 @@ namespace Mentorly.ProfileService.Endpoints
                 var entity = apiModel.ToEntity(apiModel.UserId);
                 await collection.InsertOneAsync(entity);
                 return Results.Created($"/profiles/{entity.Id}",entity);
-            }).WithMetadata().WithName("CreateProfile").WithOpenApi();
+            })/*.RequireAuthorization()*/.WithMetadata().WithName("CreateProfile").WithOpenApi();
         }
 
         public class CreateProfileApiModel
