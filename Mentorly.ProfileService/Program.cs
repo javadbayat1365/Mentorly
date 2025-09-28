@@ -1,4 +1,4 @@
-using Carter;
+﻿using Carter;
 using Mentorly.ProfileService.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Scalar.AspNetCore;
@@ -19,13 +19,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
    //app.MapOpenApi();
-   app.MapScalarApiReference();
+   app.MapScalarApiReference();//به جای swagger
 }
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapControllers();
 app.MapCarter();
-app.MapScalarApiReference();
 await app.UseMongoDbEntitiesAsync();
 app.Run();
