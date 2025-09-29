@@ -1,6 +1,5 @@
 ﻿using Carter;
 using Mentorly.ProfileService.Extensions;
-using Microsoft.AspNetCore.Builder;
 using Scalar.AspNetCore;
 //for develope branch
 //for develope branch
@@ -18,8 +17,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-   //app.MapOpenApi();
-   app.MapScalarApiReference();//به جای swagger
+    //app.MapOpenApi();
+    app.MapScalarApiReference();//به جای swagger
 }
 app.UseSwagger();
 app.UseSwaggerUI();

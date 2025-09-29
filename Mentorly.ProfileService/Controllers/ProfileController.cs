@@ -6,7 +6,7 @@ using static Mentorly.ProfileService.Endpoints.CreateProfileEndpoint;
 
 namespace Mentorly.ProfileService.Controllers
 {
-    //[NonController]
+    [NonController]
     [Route("api/[controller]")]
     [ApiController]
     public class ProfileController(IMongoDatabase db) : ControllerBase
