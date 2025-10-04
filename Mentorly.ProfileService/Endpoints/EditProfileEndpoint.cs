@@ -15,7 +15,8 @@ namespace Mentorly.ProfileService.Endpoints
         }
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPut("/Profile",async(IMongoDatabase db,EditProfileRequest model) =>{
+            app.MapPut("/Profile",async(IMongoDatabase db,EditProfileRequest model) =>
+            {
                 var collection = db.GetCollection<ProfileEntity>(ProfileEntity.CollectionName);
                 var filter = Builders<ProfileEntity>.Filter.Eq(x => x.UserId,model.UserId);
                 var update = Builders<ProfileEntity>.Update
