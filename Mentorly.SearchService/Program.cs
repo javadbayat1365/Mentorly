@@ -1,14 +1,19 @@
 using Carter;
 using Scalar.AspNetCore;
+using Microsoft.AspNetCore.OpenApi;
+using Mentorly.SearchService.ElasticSearch;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder
+    .AddElasticSearch()
+    .AddElasticSearchConfigurations();
 // Add services to the container.
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
 builder.Services.AddCarter();
 
 var app = builder.Build();
@@ -16,14 +21,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
+    app.MapOpenApi();
     app.MapScalarApiReference();
 }
 
-app.UseAuthorization();
+//app.UseAuthorization();
 app.MapCarter();
-app.MapControllers();
+await app.UseElasticSearchAsync();
+//app.MapControllers();
 
-app.Run();
+await app.RunAsync();

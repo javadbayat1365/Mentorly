@@ -2,6 +2,7 @@
 using Mentorly.ProfileService.EntityModels;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using static Mentorly.ProfileService.EntityModels.ProfileEntity;
 
 namespace Mentorly.ProfileService.Endpoints
 {
