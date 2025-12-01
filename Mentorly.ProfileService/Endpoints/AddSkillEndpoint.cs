@@ -22,7 +22,7 @@ namespace Mentorly.ProfileService.Endpoints
                 {
                     Id = Guid.NewGuid(),
                     Name = model.Name,
-                    ProficiencyLevel = 1
+                    ProficiencyLevel = model.ProficiencyLevel
                 });
 
                 var result =await collection.UpdateOneAsync(filter, update);

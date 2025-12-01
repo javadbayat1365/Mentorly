@@ -30,9 +30,9 @@ namespace Mentorly.ProfileService.Endpoints
             public string Bio { get; set; }
             public string TimeZone { get; set; }
 
-            public List<SkillModel> Skills { get; } = [];
-            public List<ExprienceModel> Expriences { get; } = [];
-            public List<SocialLinkModel> SocialLinks { get; } = [];
+            public List<SkillModel> Skills { get; set; } = [];
+            public List<ExprienceModel> Expriences { get; set; } = [];
+            public List<SocialLinkModel> SocialLinks { get; set; } = [];
 
 
             public class SkillModel
