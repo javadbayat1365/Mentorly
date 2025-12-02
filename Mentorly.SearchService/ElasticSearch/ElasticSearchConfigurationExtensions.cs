@@ -15,7 +15,7 @@ namespace Mentorly.SearchService.ElasticSearch
             var settings = new ElasticsearchClientSettings().PingTimeout(TimeSpan.FromSeconds(10));
 
             var elasticSearchClient = new ElasticsearchClient(settings);
-
+            
             builder.Services.AddSingleton(elasticSearchClient);
 
             return builder;

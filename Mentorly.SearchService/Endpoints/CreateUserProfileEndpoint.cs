@@ -1,4 +1,4 @@
-﻿using Carter;
+﻿ using Carter;
 using Elastic.Clients.Elasticsearch;
 using Mentorly.SearchService.Entities;
 
@@ -6,7 +6,7 @@ namespace Mentorly.SearchService.Endpoints
 {
     public class CreateUserProfileEndpoint : ICarterModule
     {
-        public class CreateUserProfileIdexRequest
+        public class CreateUserProfileIndexRequest
         {
             public string FullName { get; set; } = null!;
             public string Email { get; set; } = null!;
@@ -15,7 +15,7 @@ namespace Mentorly.SearchService.Endpoints
         }
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/CreateUserProfile", async (CreateUserProfileIdexRequest model, ElasticsearchClient client) =>
+            app.MapPost("/CreateUserProfile", async (CreateUserProfileIndexRequest model, ElasticsearchClient client) =>
             {
                 await client.IndexAsync(new UserProfileEntityModel()
                 {

@@ -18,9 +18,9 @@ namespace Mentorly.SearchService.Entities
         {
             await client.Indices.CreateAsync(UserProfileEntityModel.IndexName,x => 
             x.Mappings<UserProfileEntityModel>(m => m
-            .Properties(ps => ps.Text(t => t.FullName))
+            .Properties(ps => ps.Text(t => t.FullName))//Text => vector search
             .Properties(ps => ps.Text(t => t.Bio))
-            .Properties(ps => ps.Keyword(k => k.Email))
+            .Properties(ps => ps.Keyword(k => k.Email))//Keyword =>exact search
             .Properties(ps => ps.Keyword(k => k.Skills))
             ));
         }
