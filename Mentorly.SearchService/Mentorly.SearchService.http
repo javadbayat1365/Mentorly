@@ -1,4 +1,4 @@
-@Mentorly.SearchService_HostAddress = http://localhost:5126
+@Mentorly.SearchService_HostAddress = http://localhost:5058
 
 GET {{Mentorly.SearchService_HostAddress}}/weatherforecast/
 Accept: application/json
