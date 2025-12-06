@@ -28,6 +28,7 @@ namespace Mentorly.ProfileService.Endpoints
             });
         }
 
+
         public class ProfileSummeryRequest
         {
             public string? ProfileId { get; set; }
