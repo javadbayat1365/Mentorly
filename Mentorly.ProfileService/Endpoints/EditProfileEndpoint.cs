@@ -15,16 +15,16 @@ namespace Mentorly.ProfileService.Endpoints
         }
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPut("/Profile",async(IMongoDatabase db,EditProfileRequest model) =>
+            app.MapPut("/Profile", async (IMongoDatabase db, EditProfileRequest model) =>
             {
                 var collection = db.GetCollection<ProfileEntity>(ProfileEntity.CollectionName);
-                var filter = Builders<ProfileEntity>.Filter.Eq(x => x.UserId,model.UserId);
+                var filter = Builders<ProfileEntity>.Filter.Eq(x => x.UserId, model.UserId);
                 var update = Builders<ProfileEntity>.Update
-                .Set(c => c.Email,model.Email)
-                .Set(c => c.FullName,model.FullName)
-                .Set(c => c.Bio,model.Bio);
+                .Set(c => c.Email, model.Email)
+                .Set(c => c.FullName, model.FullName)
+                .Set(c => c.Bio, model.Bio);
 
-                var updateResult = await collection.UpdateOneAsync(filter,update);
+                var updateResult = await collection.UpdateOneAsync(filter, update);
                 if (updateResult.IsAcknowledged && updateResult.ModifiedCount > 0)
                     return Results.Ok();
 

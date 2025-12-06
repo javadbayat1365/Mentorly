@@ -50,5 +50,5 @@ namespace Mentorly.ProfileService.EntityModels
         }
     }
 
-
+    
 }

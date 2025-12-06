@@ -9,7 +9,8 @@ namespace Mentorly.SearchService.Entities
         public string FullName { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Bio { get; set; } = null!;
-        public string[] Skills { get; set; }
+        public string[] Skills { get; set; } = null!;
+        public string UserId { get; set; } = null!;
     }
 
     public class UserProfileEntityConfiguration : IElasticSearchConfigurationBuilder
