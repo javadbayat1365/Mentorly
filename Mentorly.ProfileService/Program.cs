@@ -1,9 +1,9 @@
 ﻿using Carter;
 using Mentorly.ProfileService.Extensions;
+using Mentorly.ProfileService.SearchServices.Interfaces;
+using Refit;
 using Scalar.AspNetCore;
-//for develope branch
-//for develope branch
-//test for master branch
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -11,6 +11,10 @@ builder.ConfigureMongoDb().ConfigureMongoDbEntities();
 builder.Services.AddCarter();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
+builder.Services.AddServiceDiscovery( );
+builder.Services.AddRefitClient<ISearchService>().ConfigureHttpClient(
+    client => client.BaseAddress =  new Uri("http://SearchService"));
 
 var app = builder.Build();
 

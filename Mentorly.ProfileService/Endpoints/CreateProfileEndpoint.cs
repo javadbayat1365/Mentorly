@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Mentorly.ProfileService.EntityModels;
+using Mentorly.ProfileService.SearchServices.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using static Mentorly.ProfileService.EntityModels.ProfileEntity;
@@ -10,7 +11,7 @@ namespace Mentorly.ProfileService.Endpoints
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db) => {
+            app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db,ISearchService searchService) => {
                 var collection = db.GetCollection<ProfileEntity>(ProfileEntity.CollectionName);
                 var existUserProfile = Builders<ProfileEntity>.Filter.Eq(x => x.UserId,apiModel.UserId);
                 if (await collection.Find(existUserProfile).AnyAsync())
@@ -18,8 +19,21 @@ namespace Mentorly.ProfileService.Endpoints
 
                 var entity = apiModel.ToEntity(apiModel.UserId);
                 await collection.InsertOneAsync(entity);
+
+               await searchService.CreateUserProfileAsync(new SearchServices.ApiModels.AddUserProfileSearchApiModel(
+                     apiModel.FullName,
+                     apiModel.Email,
+                     apiModel.Bio,
+                     apiModel.Skills.Select(s => s.Name).ToArray(),
+                     apiModel.UserId
+                    ));
+
                 return Results.Created($"/profiles/{entity.Id}",entity);
+
+
             }).WithMetadata().WithName("CreateProfile").WithOpenApi();
+
+
         }
 
         public class CreateProfileApiModel
