@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Mentorly.ProfileService.Extensions;
+using Mentorly.SearchService.ElasticSearch;
 using Scalar.AspNetCore;
 //for develope branch
 //for develope branch
@@ -7,6 +8,7 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
+builder.AddElasticSearch().AddElasticSearchConfigurations();
 builder.ConfigureMongoDb().ConfigureMongoDbEntities();
 builder.Services.AddCarter();
 builder.Services.AddSwaggerGen();
@@ -26,4 +28,5 @@ app.UseSwaggerUI();
 app.MapControllers();
 app.MapCarter();
 await app.UseMongoDbEntitiesAsync();
+await app.UseElasticSearchAsync();
 app.Run();

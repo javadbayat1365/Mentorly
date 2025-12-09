@@ -1,4 +1,5 @@
 ﻿using Carter;
+using Elastic.Clients.Elasticsearch;
 using Mentorly.ProfileService.EntityModels;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -10,7 +11,7 @@ namespace Mentorly.ProfileService.Endpoints
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db) => {
+            app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db, ElasticsearchClient client) => {
                 var collection = db.GetCollection<ProfileEntity>(ProfileEntity.CollectionName);
                 var existUserProfile = Builders<ProfileEntity>.Filter.Eq(x => x.UserId,apiModel.UserId);
                 if (await collection.Find(existUserProfile).AnyAsync())
@@ -18,6 +19,15 @@ namespace Mentorly.ProfileService.Endpoints
 
                 var entity = apiModel.ToEntity(apiModel.UserId);
                 await collection.InsertOneAsync(entity);
+
+                await client.IndexAsync(new
+                {
+                    Bio = "model.Bio",
+                    Email = "model.Email",
+                    Skills = "model.Skills",
+                    FullName = "model.FullName",
+                }, descriptor => descriptor.Index("UserProfile"));
+
                 return Results.Created($"/profiles/{entity.Id}",entity);
             }).WithMetadata().WithName("CreateProfile").WithOpenApi();
         }

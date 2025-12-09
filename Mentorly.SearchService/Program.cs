@@ -5,11 +5,7 @@ using Mentorly.SearchService.ElasticSearch;
 
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 
-//builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddEndpointsApiExplorer();
 builder.AddElasticSearch().AddElasticSearchConfigurations();
 builder.Services.AddCarter();
@@ -27,9 +23,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-//app.UseAuthorization();
-app.MapControllers();
+app.UseRouting();
 app.MapCarter();
+app.MapControllers();
 await app.UseElasticSearchAsync();
 
-await app.RunAsync();
+app.Run();
