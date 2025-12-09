@@ -1,5 +1,4 @@
 using Carter;
-using Scalar.AspNetCore;
 using Microsoft.AspNetCore.OpenApi;
 using Mentorly.SearchService.ElasticSearch;
 

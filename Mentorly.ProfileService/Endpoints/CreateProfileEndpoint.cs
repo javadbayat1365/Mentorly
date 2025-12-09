@@ -1,6 +1,7 @@
 ﻿using Carter;
 using Elastic.Clients.Elasticsearch;
 using Mentorly.ProfileService.EntityModels;
+using Mentorly.ProfileService.SearchServices.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using static Mentorly.ProfileService.EntityModels.ProfileEntity;
@@ -20,6 +21,15 @@ namespace Mentorly.ProfileService.Endpoints
                 var entity = apiModel.ToEntity(apiModel.UserId);
                 await collection.InsertOneAsync(entity);
 
+               await searchService.CreateUserProfileAsync(new SearchServices.ApiModels.AddUserProfileSearchApiModel(
+                     apiModel.FullName,
+                     apiModel.Email,
+                     apiModel.Bio,
+                     apiModel.Skills.Select(s => s.Name).ToArray(),
+                     apiModel.UserId
+                    ));
+
+
                 await client.IndexAsync(new
                 {
                     Bio = "model.Bio",
@@ -29,7 +39,11 @@ namespace Mentorly.ProfileService.Endpoints
                 }, descriptor => descriptor.Index("UserProfile"));
 
                 return Results.Created($"/profiles/{entity.Id}",entity);
+
+
             }).WithMetadata().WithName("CreateProfile").WithOpenApi();
+
+
         }
 
         public class CreateProfileApiModel
