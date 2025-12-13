@@ -11,8 +11,9 @@ namespace Mentorly.ProfileService.Endpoints
     public class CreateProfileEndpoint:ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
+        
         {
-            app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db, ElasticsearchClient client) => {
+            app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db, ElasticsearchClient client, ISearchService searchService) => {
                 var collection = db.GetCollection<ProfileEntity>(ProfileEntity.CollectionName);
                 var existUserProfile = Builders<ProfileEntity>.Filter.Eq(x => x.UserId,apiModel.UserId);
                 if (await collection.Find(existUserProfile).AnyAsync())
