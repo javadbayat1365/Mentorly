@@ -1,0 +1,19 @@
+syntax="proto3";
+
+option csharp_namespace ="Mentorly.SearchService.GrpcModels";
+
+import "google/protobuf/empty.proto";
+
+message CreateUserSearchProfileModel
+{
+  string FullName=1;
+  string Email=2;
+  string Bio=3;
+  repeated string Skills=4;
+  string UserId=5;
+}
+
+service UserProfileServices
+{
+  rpc CreateUserProfile(CreateUserSearchProfileModel) returns (google.protobuf.Empty);
+}

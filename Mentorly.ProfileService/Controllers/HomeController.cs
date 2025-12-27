@@ -5,12 +5,13 @@ using Mentorly.ProfileService.SearchServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using static Mentorly.ProfileService.Endpoints.CreateProfileEndpoint;
+using static Mentorly.SearchService.GrpcModels.UserProfileServices;
 
 namespace Mentorly.ProfileService.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class HomeController(IMongoDatabase db, ElasticsearchClient client, ISearchService searchService) : ControllerBase
+    public class HomeController(IMongoDatabase db, ElasticsearchClient client, UserProfileServicesClient grpc /*ISearchService searchService*/) : ControllerBase
     {
         [HttpPost]
         public async Task<IResult> Index(CreateProfileApiModel apiModel)
@@ -22,14 +23,21 @@ namespace Mentorly.ProfileService.Controllers
 
             var entity = apiModel.ToEntity(apiModel.UserId);
 
-            await searchService.CreateUserProfileAsync(new SearchServices.ApiModels.AddUserProfileSearchApiModel(
-                  apiModel.FullName,
-                  apiModel.Email,
-                  apiModel.Bio,
-                  apiModel.Skills.Select(s => s.Name).ToArray(),
-                  apiModel.UserId
-                 ));
-
+            //await searchService.CreateUserProfileAsync(new SearchServices.ApiModels.AddUserProfileSearchApiModel(
+            //      apiModel.FullName,
+            //      apiModel.Email,
+            //      apiModel.Bio,
+            //      apiModel.Skills.Select(s => s.Name).ToArray(),
+            //      apiModel.UserId
+            //     ));
+            await grpc.CreateUserProfileAsync(new SearchService.GrpcModels.CreateUserSearchProfileModel()
+            {
+                Bio = apiModel.Bio,
+                Email = apiModel.Email,
+                FullName = apiModel.FullName,
+                Skills = { apiModel.Skills.Select(s => s.Name) },
+                UserId = apiModel.UserId,
+            });
 
             await collection.InsertOneAsync(entity);
             await client.IndexAsync(new

@@ -4,17 +4,27 @@ using Mentorly.SearchService.ElasticSearch;
 using Mentorly.ProfileService.SearchServices.Interfaces;
 using Refit;
 using Scalar.AspNetCore;
+using Mentorly.SearchService.GrpcModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.AddElasticSearch().AddElasticSearchConfigurations();
 builder.ConfigureMongoDb().ConfigureMongoDbEntities();
+
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
 builder.Services.AddCarter();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-builder.Services.AddServiceDiscovery( );
+builder.Services.AddServiceDiscovery();
+
+builder.Services.AddGrpcClient<UserProfileServices.UserProfileServicesClient>(options =>
+{
+    options.Address = new Uri("https://localhost:7106");
+}).AddServiceDiscovery();
+
 builder.Services.AddRefitClient<ISearchService>().ConfigureHttpClient(
     client => client.BaseAddress =  new Uri("http://localhost:16449"));
 

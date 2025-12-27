@@ -8,9 +8,14 @@
 
   <ItemGroup>
 	<PackageReference Include="Carter" Version="8.1.0" />
+	<PackageReference Include="Google.Protobuf" Version="3.33.2" />
+	<PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.22" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.19.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="Protos\UserProfileService.proto" GrpcServices="Server" />
+	</ItemGroup>
 </Project>
