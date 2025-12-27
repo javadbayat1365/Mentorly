@@ -11,7 +11,6 @@ namespace Mentorly.ProfileService.Endpoints
     public class CreateProfileEndpoint:ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
-        
         {
             app.MapPost("/profile", async (CreateProfileApiModel apiModel, IMongoDatabase db, ElasticsearchClient client, ISearchService searchService) => {
                 var collection = db.GetCollection<ProfileEntity>(ProfileEntity.CollectionName);
@@ -56,7 +55,7 @@ namespace Mentorly.ProfileService.Endpoints
             public string TimeZone { get; set; }
 
             public List<SkillModel> Skills { get; set; } = [];
-            public List<ExprienceModel> Expriences { get; set; } = [];
+            public List<ExperienceModel> Experiences { get; set; } = [];
             public List<SocialLinkModel> SocialLinks { get; set; } = [];
 
 
@@ -66,7 +65,7 @@ namespace Mentorly.ProfileService.Endpoints
                 public int ProficiencyLevel { get; set; }
             }
 
-            public class ExprienceModel
+            public class ExperienceModel
             {
                 public string Title { get; set; }
                 public string Company { get; set; }
@@ -100,7 +99,7 @@ namespace Mentorly.ProfileService.Endpoints
                         Platform = s.Platform, 
                         Url = s.Url 
                     }).ToList(),
-                    Expriences = this.Expriences.Select(x => new Exprience()
+                    Expriences = this.Experiences.Select(x => new Exprience()
                     {
                         Title = x.Title,
                         Company = x.Company,

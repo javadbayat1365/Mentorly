@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddServiceDiscovery( );
 builder.Services.AddRefitClient<ISearchService>().ConfigureHttpClient(
-    client => client.BaseAddress =  new Uri("http://SearchService"));
+    client => client.BaseAddress =  new Uri("http://localhost:16449"));
 
 var app = builder.Build();
 
